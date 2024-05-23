@@ -26,4 +26,8 @@ public class AuthenticatedUserRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getEmail() {
+        return null;
+    }
 }

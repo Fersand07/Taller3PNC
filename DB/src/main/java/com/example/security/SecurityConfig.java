@@ -1,6 +1,6 @@
 package com.example.security;
 
-import com.example.services.UserService;
+import com.example.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     @Autowired
-    public SecurityConfig(UserService userService){
-        this.userService = userService;
+    public SecurityConfig(UserServiceImpl userServiceImpl){
+        this.userServiceImpl = userServiceImpl;
     }
 
     @Bean
@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return userService;
+        return userServiceImpl;
     }
 
     @Autowired

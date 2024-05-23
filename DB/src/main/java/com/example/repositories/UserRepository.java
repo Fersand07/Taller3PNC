@@ -1,11 +1,11 @@
 package com.example.repositories;
 
-import com.example.model.UserModel;
+import com.example.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserModel, Integer> {
-    Optional<UserModel> findByLogin(String login);
-    Optional<UserModel> findByLoginAndPassword(String login, String password);
+public interface UserRepository extends JpaRepository<User, Integer> {
+    Optional<User> findByLogin(String login);
+    Optional<User> findByLoginAndPassword(String login, String password);
 }
