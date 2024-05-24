@@ -4,7 +4,7 @@ import com.example.controllers.DTOS.AuthenticatedUserRequest;
 import com.example.controllers.DTOS.RegisterUserRequestDTO;
 import com.example.controllers.DTOS.TokenDTO;
 import com.example.entity.Token;
-import com.example.model.User;
+import com.example.entity.User;
 import com.example.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

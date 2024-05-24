@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import com.example.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,11 +18,10 @@ public class Token {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "code", columnDefinition = "uuid", updatable = false)
+    @Column(name = "code")
     private UUID code;
 
-    @Column(name = "content", nullable = false)
-    private String content;
+    @Column(name = "content", nullable = false)    private String content;
 
     @Column(name = "timestamp", updatable = false)
     private Date timestamp;

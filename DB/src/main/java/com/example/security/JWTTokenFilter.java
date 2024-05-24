@@ -1,5 +1,6 @@
-package com.example.filters;
+package com.example.security;
 
+import com.example.entity.User;
 import com.example.services.UserService;
 import com.example.utils.JWTTools;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -9,6 +10,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -18,10 +22,10 @@ import java.io.IOException;
 public class JWTTokenFilter extends OncePerRequestFilter {
 
     @Autowired
-    JWTTools jwtTools;
+    private JWTTools jwtTools;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -46,7 +50,33 @@ public class JWTTokenFilter extends OncePerRequestFilter {
         } else {
             System.out.println("Bearer string not found");
         }
+
+        if(username != null && token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            User user = userService.findOneByIdentifier(username);
+
+            if(user != null) {
+                Boolean tokenValidity = userService.isTokenValid(user, token);
+
+                if(tokenValidity) {
+                    UsernamePasswordAuthenticationToken authToken
+                            = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+
+                    authToken.setDetails(
+                            new WebAuthenticationDetailsSource().buildDetails(request)
+                    );
+
+                    SecurityContextHolder
+                            .getContext()
+                            .setAuthentication(authToken);
+                }
+            }
+        }
+        filterChain.doFilter(request, response);
     }
 
-
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.equals("/api/users/register") || path.equals("/api/users/login");
+    }
 }

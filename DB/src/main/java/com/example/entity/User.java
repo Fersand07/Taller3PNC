@@ -1,6 +1,5 @@
-package com.example.model;
+package com.example.entity;
 
-import com.example.entity.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

@@ -2,7 +2,7 @@ package com.example.services;
 
 import com.example.controllers.DTOS.AuthenticatedUserRequest;
 import com.example.entity.Token;
-import com.example.model.User;
+import com.example.entity.User;
 import com.example.repositories.TokenRepository;
 import com.example.repositories.UserRepository;
 import com.example.utils.JWTTools;
